@@ -61,16 +61,17 @@ var todoList = {
   }
 };
 
-//Display todos button functionality
-var displayTodosButton = document.getElementById('displayTodosButton');
-
-displayTodosButton.addEventListener('click', function() {
-  todoList.displayTodos();
-});
-
-//Toggle all button functionality
-var toggleAllButton = document.getElementById('toggleAllButton');
-
-toggleAllButton.addEventListener('click', function() {
-  todoList.toggleAll();
-});
+var handlers = {
+  addTodo: function() {
+    var addTodoTextInput = document.getElementById("addTodoText");
+    todoList.addTodo(addTodoTextInput.value);
+    addTodoTextInput.value = "";
+  },
+  changeTodo: function() {
+    var changeTodoTextInput = document.getElementById("changeTodoText");
+    var changeTodoPositionInput = document.getElementById("changeTodoPosition");
+    todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
+    changeTodoTextInput.value = "";
+    changeTodoPositionInput.value = "";
+  }
+}

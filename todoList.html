@@ -7,10 +7,20 @@
 
   <body>
     <h1>Todo List</h1>
+    <div>
+      <button onclick="todoList.displayTodos()">Display Todos</button>
+      <button onclick="todoList.toggleAll()">Toggle All</button>
+    </div>
 
-    <button id="displayTodosButton">Display Todos</button>
-    <button id="toggleAllButton">Toggle All</button>
-    
+    <div>
+      <button onclick="handlers.addTodo()">Add Todo</button>
+      <input id="addTodoText" type="text">
+    </div>
+    <div>
+      <button onclick="handlers.changeTodo()">Change Todo</button>
+      <input id="changeTodoPosition" type="number">
+      <input id="changeTodoText" type="text">
+    </div>
     <script src="todoList.js"></script>
   </body>
 </html>
