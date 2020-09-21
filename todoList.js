@@ -44,6 +44,7 @@ var todoList = {
   }
 };
 
+//allows for user input
 var handlers = {
   addTodo: function() {
     var addTodoTextInput = document.getElementById("addTodoText");
@@ -59,11 +60,11 @@ var handlers = {
     changeTodoTextInput.value = "";
     changeTodoPositionInput.value = "";
   },
-  deleteTodo: function() {
-    var deleteTodoPositionInput = document.getElementById("deleteTodoPosition");
-    todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
+  deleteTodo: function(position) {
+    //var deleteTodoPositionInput = document.getElementById("deleteTodoPosition");
+    todoList.deleteTodo(position);
     view.displayTodos();
-    deleteTodoPositionInput.value = "";
+    //deleteTodoPositionInput.value = "";
   },
   toggleCompleted: function() {
     var toggleCompletedPositionInput = document.getElementById("toggleCompletedPosition");
@@ -90,8 +91,31 @@ var view = {
         todoTextWithCompletion = "( ) " + todo.todoText;
       }
 
+      makeLi.id = i;
       makeLi.textContent = todoTextWithCompletion;
+      makeLi.appendChild(this.createDeleteButton());
       grabUl.appendChild(makeLi);
+
     }
+  },
+  createDeleteButton: function() {
+    var deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.className = "deleteButton";
+
+    return deleteButton;
+  },
+  eventListeners: function() {
+    var todosUl = document.querySelector("ul");
+
+    todosUl.addEventListener("click", function(event) {
+      var elementClicked = event.target;
+      
+      if(elementClicked.className == "deleteButton") {
+        handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+      }
+    });
   }
 };
+
+view.eventListeners();
