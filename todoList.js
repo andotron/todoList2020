@@ -18,28 +18,25 @@ var todoList = {
     todo.completed = !todo.completed;
   },
   toggleAll: function() {
-    /*if all false = all true
-    if some true = all true
-    if all true = all false*/
     var totalTodos = this.todos.length;
     var completedTodos = 0;
-    //check number of tasks are completed
-    for (var i = 0; i< totalTodos; i++) {
-      if (this.todos[i].completed == true) {
+
+    this.todos.forEach(function(item) {
+      if (item.completed == true) {
         completedTodos++;
       }
-    }
-    //case 1: if everythings true, make everything false
-    if (totalTodos == completedTodos) {
-      for (var i = 0; i < totalTodos; i++){
-        this.todos[i].completed = false;
+    })
+
+
+    this.todos.forEach(function(item) {
+      if (totalTodos == completedTodos) {
+        item.completed = false;
+      } else {
+        item.completed = true;
       }
-    } else {
-    //case 2: else, make everything true.
-      for (var i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = true;
-      }
-    }
+    })
+
+
     view.displayTodos();
   }
 };
@@ -79,24 +76,22 @@ var view = {
   displayTodos: function() {
     var grabUl = document.querySelector("ul");
     grabUl.innerHTML = "";
-    
-    for (var i = 0; i < todoList.todos.length; i++) {
-      var makeLi = document.createElement("li");
-      var todo = todoList.todos[i];
-      var todoTextWithCompletion = "";
 
-      if (todo.completed == true) {
-        todoTextWithCompletion = "(X) " + todo.todoText;
+    todoList.todos.forEach(function(item, position) {
+      var makeLi = document.createElement("li");
+      var todoTextWithCompletion = "";
+      
+      if (item.completed == true) {
+        todoTextWithCompletion = "(X) " + item.todoText;
       } else {
-        todoTextWithCompletion = "( ) " + todo.todoText;
+        todoTextWithCompletion = "( ) " + item.todoText;
       }
 
-      makeLi.id = i;
+      makeLi.id = position;
       makeLi.textContent = todoTextWithCompletion;
       makeLi.appendChild(this.createDeleteButton());
       grabUl.appendChild(makeLi);
-
-    }
+    }, this)
   },
   createDeleteButton: function() {
     var deleteButton = document.createElement("button");
